@@ -18,60 +18,68 @@ class Fraction {
 private:
     int num;
     int den;
-    int find_gcd(int, int);
-    void reduce_fraction(int, int);
+
+    void reduce_fraction();
 public:
     Fraction();
-
     Fraction(int);
-
     Fraction(int, int);
 
-    std::string to_string();
+    int find_gcd(int, int);
 
-    int numerator();
-
-    int denominator();
-
-    //Unary Arithmatic
-    //void operator -() const; //negation
-    void operator ++() const; //++ prefix
-    void operator ++(int) const;//++ postfix
-
-    //Binary Arithmatic
-    Fraction& operator +(const Fraction&);
-    Fraction& operator -(const Fraction&);
-    Fraction& operator *(const Fraction&);
-    Fraction& operator /(const Fraction&);
+    int getNum() const;
+    int getDen() const;
 
     //Addition and assignment
-    Fraction& operator +=(const Fraction&);
+    Fraction& operator += (const Fraction& frac);
+    Fraction& operator += (const int& i);
 
-    //Comparison operators
-    friend bool operator < (const Fraction&,const Fraction&);
-    friend bool operator <= (const Fraction&,const Fraction&);
-    friend bool operator == (const Fraction&,const Fraction&);
-    friend bool operator != (const Fraction&,const Fraction&);
-    friend bool operator >= (const Fraction&,const Fraction&);
-    friend bool operator > (const Fraction&,const Fraction&);
-
-    //input output stream
-    friend ostream& operator << (ostream, const Fraction&);
-    friend istream& operator >> (istream, const Fraction&);
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //Unary Arithmatic
+    Fraction& operator -(); //negation
+    Fraction& operator ++(); //++ prefix
+    Fraction& operator ++(int); //++ suffix
+//++ postfix
 
 };
 
+
+//Binary Arithmatic
+Fraction operator +(const Fraction& lhs, const Fraction& rhs);
+Fraction operator +(const int& i, const Fraction& rhs);
+Fraction operator +(const Fraction& lhs, const int& i);
+Fraction operator -(const Fraction& lhs, const Fraction& rhs);
+Fraction operator -(const int& i, const Fraction& rhs);
+Fraction operator -(const Fraction& lhs, const int& i);
+Fraction operator *(const Fraction& lhs, const Fraction& rhs);
+Fraction operator *(const int& i, const Fraction& rhs);
+Fraction operator *(const Fraction& lhs, const int& i);
+Fraction operator /(const Fraction& lhs, const Fraction& rhs) ;
+Fraction operator /(const int& i, const Fraction& rhs);
+Fraction operator /(const Fraction& lhs, const int& i);
+
+
+
+//Comparison operators
+bool operator < (const Fraction&,const Fraction&);
+bool operator < (const int& i,const Fraction&);
+bool operator < (const Fraction&,const int& i);
+bool operator <= (const Fraction&,const Fraction&);
+bool operator <= (const int& i,const Fraction&);
+bool operator <= (const Fraction&,const int& i);
+bool operator == (const Fraction&,const Fraction&);
+bool operator == (const int& i,const Fraction&);
+bool operator == (const Fraction&,const int& i);
+bool operator != (const Fraction&,const Fraction&);
+bool operator != (const int& i,const Fraction&);
+bool operator != (const Fraction&,const int& i);
+bool operator >= (const Fraction&,const Fraction&);
+bool operator >= (const int& i,const Fraction&);
+bool operator >= (const Fraction&,const int& i);
+bool operator > (const Fraction&,const Fraction&);
+bool operator > (const int& i,const Fraction&);
+bool operator > (const Fraction&,const int& i);
+
+//input output stream
+ostream& operator << (ostream& out, const Fraction& frac);
+istream& operator >> (istream& out, const Fraction& frac);
 
