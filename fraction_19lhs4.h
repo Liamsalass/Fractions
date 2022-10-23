@@ -9,7 +9,7 @@
 #include <stdexcept>
 using namespace std;
 
-class ZeroDenominator : public std::exception {
+class FractionException : public std::exception {
 public:
     char *what();
 };
@@ -25,10 +25,10 @@ public:
     Fraction(int);
     Fraction(int, int);
 
-    int find_gcd(int, int);
+    int find_gcd(int, int) const;
 
-    int getNum() const;
-    int getDen() const;
+    int numerator() const;
+    int denominator() const;
 
     //Addition and assignment
     Fraction& operator += (const Fraction& frac);
@@ -37,8 +37,10 @@ public:
     //Unary Arithmatic
     Fraction& operator -(); //negation
     Fraction& operator ++(); //++ prefix
-    Fraction& operator ++(int); //++ suffix
+    Fraction operator ++(int); //++ suffix
 //++ postfix
+
+
 
 };
 
@@ -82,4 +84,5 @@ bool operator > (const Fraction&,const int& i);
 //input output stream
 ostream& operator << (ostream& out, const Fraction& frac);
 istream& operator >> (istream& out, const Fraction& frac);
+
 
