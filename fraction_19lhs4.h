@@ -13,19 +13,23 @@ class FractionException : public std::exception {
 public:
     char *what();
 };
+class InputException : public std::exception {
+public:
+    char *what();
+};
 
 class Fraction {
 private:
+    void reduce_fraction();
     int num;
     int den;
-
-    void reduce_fraction();
 public:
     Fraction();
     Fraction(int);
     Fraction(int, int);
 
     int find_gcd(int, int) const;
+
 
     int numerator() const;
     int denominator() const;
@@ -83,6 +87,5 @@ bool operator > (const Fraction&,const int& i);
 
 //input output stream
 ostream& operator << (ostream& out, const Fraction& frac);
-istream& operator >> (istream& out, const Fraction& frac);
-
+istream& operator >> (istream& input, Fraction& frac);
 

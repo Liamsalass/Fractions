@@ -12,10 +12,15 @@
 
 using namespace std;
 
+//Exception classes for zero denominators and if an incorrect fraction is entered.
 char *FractionException::what() {
     return (char *) "Zero Denominator";
 }
+char *InputException::what() {
+    return (char *) "Incorrect Fraction entered";
+}
 
+//Constructors
 Fraction::Fraction(){
     num = 0;
     den = 1;
@@ -35,9 +40,11 @@ Fraction::Fraction(int n, int d) {
     reduce_fraction();
 }
 
+//Getters
 int Fraction::numerator() const{ return num;}
 int Fraction::denominator() const{ return den;}
 
+//GCD function
 int Fraction::find_gcd(int a, int b) const{
     if (b<= a && (a%b)==0)
         return b;
@@ -45,6 +52,7 @@ int Fraction::find_gcd(int a, int b) const{
     else return find_gcd(b, a%b);
 }
 
+//Function to reduce the fraction
 void Fraction::reduce_fraction() {
     int neg = 1;
     if (num == 0) return;
@@ -67,7 +75,6 @@ Fraction& Fraction::operator +=(const Fraction& frac){
     *this = frac + *this;
     return *this;
 }
-
 Fraction& Fraction::operator +=(const int& i){
     Fraction temp(i);
     *this = temp + *this;
@@ -80,12 +87,10 @@ Fraction& Fraction::operator-() {
     num *= -1;
     return *this;
 }
-
 Fraction& Fraction::operator++() {
     num += den;
     return *this;
 }
-
 Fraction Fraction::operator++(int n) {
     Fraction temp(num, den);
     ++*this;
@@ -101,12 +106,10 @@ Fraction operator+(const Fraction& left, const Fraction& right){
         return newFrac;
     }
 }
-
 Fraction operator+(const int& i, const Fraction& rhs){
     Fraction temp(i);
     return temp + rhs;
 }
-
 Fraction operator+(const Fraction& lhs, const int& i){
     Fraction temp(i);
     return temp + lhs;
@@ -121,12 +124,10 @@ Fraction operator-(const Fraction& left, const Fraction& right){
         return newFrac;
     }
 }
-
 Fraction operator-(const int& i, const Fraction& rhs){
     Fraction temp(i);
     return temp - rhs;
 }
-
 Fraction operator-(const Fraction& lhs, const int& i){
     Fraction temp(i);
     return lhs - temp;
@@ -137,12 +138,10 @@ Fraction operator-(const Fraction& lhs, const int& i){
 Fraction operator*(const Fraction& left, const Fraction& right) {
     return Fraction(left.numerator() * right.numerator(), left.denominator() * right.denominator());
 }
-
 Fraction operator*(const int& i, const Fraction& rhs){
     Fraction temp(i);
     return temp * rhs;
 }
-
 Fraction operator*(const Fraction& lhs, const int& i){
     Fraction temp(i);
     return lhs * temp;
@@ -152,12 +151,10 @@ Fraction operator*(const Fraction& lhs, const int& i){
 Fraction operator/(const Fraction& left, const Fraction& right){
     return Fraction(left.numerator()*right.denominator(),left.denominator()*right.numerator());
 }
-
 Fraction operator/(const int& i, const Fraction& rhs){
     Fraction temp(i);
     return rhs/temp;
 }
-
 Fraction operator/(const Fraction& lhs, const int& i){
     Fraction temp(i);
     return lhs/temp;
@@ -170,14 +167,12 @@ bool operator < (const Fraction& lhs, const Fraction& rhs){
     if (temp.numerator()<=0) return false;
     else return true;
 }
-
 bool operator < (const int& i, const Fraction& rhs){
     Fraction temp(1,1);
     temp = rhs - i;
     if (temp.numerator()<=0) return false;
     else return true;
 }
-
 bool operator < (const Fraction& lhs, const int& i){
     Fraction temp(1,1);
     temp = i - lhs;
@@ -190,14 +185,12 @@ bool operator <= (const Fraction& lhs, const Fraction& rhs){
     if (temp.numerator()<0) return false;
     else return true;
 }
-
 bool operator <= (const int& i, const Fraction& rhs){
     Fraction temp(1,1);
     temp = rhs - i;
     if (temp.numerator()<0) return false;
     else return true;
 }
-
 bool operator <= (const Fraction& lhs, const int& i){
     Fraction temp(1,1);
     temp = i - lhs;
@@ -207,39 +200,37 @@ bool operator <= (const Fraction& lhs, const int& i){
 bool operator == (const Fraction& lhs, const Fraction& rhs){
     Fraction temp;
     temp = lhs - rhs;
-    if (temp.numerator()==0) return false;
+    if (temp.numerator()!=0) return false;
     else return true;
 }
 bool operator == (const int& i, const Fraction& rhs){
     Fraction temp(1,1);
     temp = i - rhs;
-    if (temp.numerator()==0) return false;
+    if (temp.numerator()!=0) return false;
     else return true;
 }
-
 bool operator == (const Fraction& lhs, const int& i){
     Fraction temp(1,1);
     temp = lhs - i;
-    if (temp.numerator()==0) return false;
+    if (temp.numerator()!=0) return false;
     else return true;
 }
 bool operator != (const Fraction& lhs, const Fraction& rhs){
     Fraction temp(1,1);
     temp = lhs - rhs;
-    if (temp.numerator()!=0) return false;
+    if (temp.numerator()==0) return false;
     else return true;
 }
 bool operator != (const int& i, const Fraction& rhs){
     Fraction temp(1,1);
     temp = i - rhs;
-    if (temp.numerator()!=0) return false;
+    if (temp.numerator()==0) return false;
     else return true;
 }
-
 bool operator != (const Fraction& lhs, const int& i){
     Fraction temp(1,1);
     temp = lhs - i;
-    if (temp.numerator()!=0) return false;
+    if (temp.numerator()==0) return false;
     else return true;
 }
 bool operator >= (const Fraction& lhs, const Fraction& rhs){
@@ -254,7 +245,6 @@ bool operator >= (const int& i, const Fraction& rhs){
     if (temp.numerator()<0) return false;
     else return true;
 }
-
 bool operator >= (const Fraction& lhs, const int& i){
     Fraction temp(1,1);
     temp = lhs - i;
@@ -273,18 +263,44 @@ bool operator > (const int& i, const Fraction& rhs){
     if (temp.numerator()<=0) return false;
     else return true;
 }
-
 bool operator > (const Fraction& lhs, const int& i){
     Fraction temp(1,1);
     temp = lhs - i;
     if (temp.numerator()<=0) return false;
     else return true;
 }
+
+//out stream operator overload method
 ostream& operator<<(ostream& out, const Fraction& frac){
-    out <<
+    out << frac.numerator() << '/' << frac.denominator();
     return out;
 }
-istream operator >> (istream& out, const Fraction& frac){
-    out >> frac.numerator() >> '/' >> frac.denominator();
-    return out;
+
+//in stream operator overload method
+istream& operator >> (istream &input, Fraction& frac){
+    string is;
+    input >> is; // store the user input in is
+
+    size_t slash = is.find('/'); //Used to find index of slash in input string
+
+    if (slash == string::npos){ //If no / is used, the case that a whole number is entered.
+        try{
+            int n = stoi(is);
+            frac = Fraction(n);
+            return input;
+        } catch (exception& e){}
+        throw InputException();
+    } else {
+        if (slash + 1 >= is.size()){ //In the case the slash is at the end but nothing else is entered after.
+            throw InputException();
+        }
+        try { //Store numerator and denominator left and right of the slash in the string is.
+            int n =stoi(is.substr(0,slash));
+            int d = stoi(is.substr(slash + 1, is.size() - slash - 1));
+            frac = Fraction(n, d); //set frac to the new fraction
+            return input;
+        } catch (exception& e){
+            throw InputException();
+        }
+    }
 }
